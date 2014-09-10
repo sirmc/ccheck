@@ -67,7 +67,7 @@ for i in subprocess.check_output(["find", ".", "-name", "*.[ch]"]).decode('utf-8
         if re.search('[A-Z]', m.group('id')):
             die(i + ": bad struct, enum or union name")
 
-    if re.search(r'\b(if|for|else|while|do|return|continue|break|sizeof)\b([^ ;]|  +|$)', canon, re.M):
+    if re.search(r'\b(if|for|while|do|(__)?asm(__)?|return|continue|break|sizeof)\b([^ ;]|  +)', canon, re.M):
         die(i + ": keyword not followed by single space or semicolon")
 
     if re.search(';([^ \n]|  +)', canon, re.M):
