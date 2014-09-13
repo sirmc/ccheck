@@ -90,7 +90,7 @@ for i in subprocess.check_output(["find", ".", "-name", "*.[ch]"]).decode('utf-8
            and not re.match(r' *# *define', line):
             die(i + ": incorrect space between cast or function and opening '('")
 
-        if re.search(r'[^ !+*\/%^&=<>|-](&=|\*=|-=|\+=|-=|\+=|&&|\||\|\||[\/%:?^=]|[<>=]=|<<?|>>?|!=?|^)', line):
+        if re.search(r'[^ !+*\/%^&=<>|-](!=|&=|\*=|-=|\+=|-=|\+=|&&|\||\|\||[\/%:?^=]|[<>=]=|<<?|>>?|^)', line):
             die(i + ": missing space before operator")
 
         if re.search(r'[^-](&&|\||\|\||[/%:?^=]|[<>=]=|<<?|>>?)[^ /%:?^=><|]', line):
