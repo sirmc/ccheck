@@ -96,6 +96,9 @@ for i in subprocess.check_output(["find", ".", "-name", "*.[ch]"]).decode('utf-8
         if re.search(r'[^-](&&|\||\|\||[/%:?^=]|[<>=]=|<<?|>>?)[^ /%:?^=><|]', line):
             die(i + ": missing space after operator")
 
+        if re.search(r'(,)[^ ]', line):
+            die(i + ": missing space after comma")
+
         if re.search(r'-> | ->', line):
             die(i + ": invalid space around ->")
 
