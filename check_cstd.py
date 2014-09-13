@@ -52,7 +52,7 @@ for i in subprocess.check_output(["find", ".", "-name", "*.[ch]"]).decode('utf-8
     canon = re.sub(r'/\*([^*]|\*[^/])*\*/', '', contents)
     canon = re.sub(r'//[^\n]\n', '\n', canon)
     canon = re.sub(r'"([^\\]|\\.)*"', 'str', canon)
-    canon = re.sub(r"'[^\\]|\\.'", 'chr', canon)
+    canon = re.sub(r"(')(?:(?=(\\?))\2.)*?\1", 'chr', canon)
 
     for m in re.finditer(r'^ *# *define +([a-zA-Z_][a-zA-Z0-9_]*)', canon, re.M):
         if re.search('[a-z]', m.group(1)):
@@ -90,7 +90,7 @@ for i in subprocess.check_output(["find", ".", "-name", "*.[ch]"]).decode('utf-8
            and not re.match(r' *# *define', line):
             die(i + ": incorrect space between cast or function and opening '('")
 
-        if re.search(r'[^ !&=<>|-](&&|\||\|\||[/%:?^=]|[<>=]=|<<?|>>?)', line):
+        if re.search(r'[^ !+*\/%^&=<>|-](&=|\*=|-=|\+=|-=|\+=|&&|\||\|\||[\/%:?^=]|[<>=]=|<<?|>>?|!=?|^)', line):
             die(i + ": missing space before operator")
 
         if re.search(r'[^-](&&|\||\|\||[/%:?^=]|[<>=]=|<<?|>>?)[^ /%:?^=><|]', line):
